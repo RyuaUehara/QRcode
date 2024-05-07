@@ -2,6 +2,10 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <p>qrcode</p>
+    <div className="w-screen">
+      <div className="bg-blue-300 text-green-500 p-2 flex items-center justify-center">
+        訪問介護時間管理
+      </div>
+    </div>
   );
 }
