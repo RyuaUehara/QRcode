@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,24 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-CREATE TABLE "public"."ヘルパー" (
-  id SERIAL PRIMARY KEY NOT NULL,
-  ヘルパーID VARCHAR(255) UNIQUE NOT NULL,
-  ヘルパー名 VARCHAR(255)
-);
+model Helper {
+  id        Int      @id @default(autoincrement())
+  helperID  String   @unique
+  helperName String?
+}
 
-CREATE TABLE "public"."顧客" (
-  id SERIAL PRIMARY KEY NOT NULL,
-  顧客ID VARCHAR(255) UNIQUE NOT NULL,
-  顧客名 VARCHAR(255)
-);
+model Customer {
+  id          Int      @id @default(autoincrement())
+  customerID  String   @unique
+  customerName String?
+}
 
-CREATE TABLE "public"."出退勤表" (
-  id SERIAL PRIMARY KEY NOT NULL,
-  ヘルパーID VARCHAR(255),
-  ヘルパー名 VARCHAR(255),
-  顧客ID VARCHAR(255),
-  顧客名 VARCHAR(255),
-  出勤時間 timestamp,
-  退勤時間 timestamp
-);
+model AttendanceRecord {
+  id        Int      @id @default(autoincrement())
+  helperID  String
+  helperName String
+  customerID String
+  customerName String
+  checkIn   DateTime?
+  checkOut  DateTime?
+}
