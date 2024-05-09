@@ -12,3 +12,25 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+CREATE TABLE "public"."ヘルパー" (
+  id SERIAL PRIMARY KEY NOT NULL,
+  ヘルパーID VARCHAR(255) UNIQUE NOT NULL,
+  ヘルパー名 VARCHAR(255)
+);
+
+CREATE TABLE "public"."顧客" (
+  id SERIAL PRIMARY KEY NOT NULL,
+  顧客ID VARCHAR(255) UNIQUE NOT NULL,
+  顧客名 VARCHAR(255)
+);
+
+CREATE TABLE "public"."出退勤表" (
+  id SERIAL PRIMARY KEY NOT NULL,
+  ヘルパーID VARCHAR(255),
+  ヘルパー名 VARCHAR(255),
+  顧客ID VARCHAR(255),
+  顧客名 VARCHAR(255),
+  出勤時間 timestamp,
+  退勤時間 timestamp
+);
