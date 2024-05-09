@@ -2,14 +2,6 @@
 
 import Image from "next/image";
 
-async function fetchCustomers(){
-  const res = await fetch("http:localhost:3000/api/login",{
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data.customers;
-}
-
 export default function Home() {
   return (
     <div className="w-screen">
