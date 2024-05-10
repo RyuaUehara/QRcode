@@ -80,7 +80,7 @@ const CameraJsQR2 = () => {
         onClick={resetQrCodeText}
         className="bg-red-900 text-white px-2 py-1 mb-2"
       >
-        reset
+        戻る
       </button>
     </div>
   );
