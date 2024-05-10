@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useRef, useEffect, useState } from "react";
 import jsQR from "jsqr-es6";
 
@@ -13,7 +11,6 @@ const CameraJsQR2 = () => {
   };
 
   useEffect(() => {
-    // カメラへのアクセス
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia({ video: true })
@@ -51,6 +48,10 @@ const CameraJsQR2 = () => {
         });
         if (code) {
           setQrCodeText(code.data);
+          // QRコードの読み取り結果がURLの場合はリダイレクトする
+          if (isValidURL(code.data)) {
+            window.location.href = code.data;
+          }
         } else {
           setQrCodeText("");
           requestAnimationFrame(scan);
@@ -61,6 +62,12 @@ const CameraJsQR2 = () => {
       }
     };
     scan();
+  };
+
+  const isValidURL = (url) => {
+    // 簡単なURLのバリデーション
+    const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
+    return pattern.test(url);
   };
 
   return (
