@@ -72,7 +72,7 @@ const CameraJsQR2 = () => {
 
   return (
     <div className="flex flex-col w-1/2 items-center border-2">
-      <p className="text-center w-full font-bold text-xl pb-2">use jsQR2</p>
+      <p className="text-center w-full font-bold text-xl pb-2">QRコードを読み込んでください</p>
       <video ref={videoRef} style={{ display: "none" }} />
       <canvas ref={canvasRef} style={{ display: "none" }} />
       <div>
