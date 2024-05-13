@@ -6,7 +6,7 @@ import { useState } from "react";
 const NewCustomer = () => {
   const router = useRouter();
 
-  const [name, setName] = useState("");
+  const [customerName, setName] = useState("");
   const [isFetching, setIsFetching] = useState(false);
 
   const handleSubmit = async () => {
@@ -17,7 +17,7 @@ const NewCustomer = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name }),
+        body: JSON.stringify({ customerName }),
       });
       const data = await response.json();
     }
@@ -33,7 +33,7 @@ const NewCustomer = () => {
         <p className="text-center font-bold">Form (NewUser.tsx)</p>
         <div className="flex flex-col mb-4">
           <label htmlFor="name" className="mb-2">
-            Name
+            customerName
           </label>
           <input
             onChange={(event) => {
@@ -61,7 +61,7 @@ const NewCustomer = () => {
       <div className="flex flex-col w-full">
         <p className="font-bold">REST-API Payload:</p>
         <div className="border-2 items-center justify-center p-5 overflow-auto whitespace-normal">
-          {JSON.stringify({ name })}
+          {JSON.stringify({ customerName })}
         </div>
       </div>
     </div>
