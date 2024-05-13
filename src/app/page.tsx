@@ -12,6 +12,7 @@ export default function Home() {
       <div className="flex h-screen items-center justify-center">
         <CameraJsQR2 />
       </div>
+      <a href="/admin">管理者画面</a>
     </div>
   );
 }
