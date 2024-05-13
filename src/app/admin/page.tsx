@@ -8,7 +8,7 @@ export default function Home() {
         <div className="flex flex-col w-1/2 items-center justify-center">
           <p className="font-bold text-6xl mb-5">/</p>
           <p className="font-bold text-7xl mb-10">page.tsx</p>
-          <Link href="/customer">[new user]</Link>
+          <Link href="/customer">[追加]</Link>
         </div>
         <ViewCustomers />
       </div>

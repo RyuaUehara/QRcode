@@ -10,7 +10,6 @@ CREATE TABLE "Helper" (
 -- CreateTable
 CREATE TABLE "Customer" (
     "id" SERIAL NOT NULL,
-    "customerID" TEXT NOT NULL,
     "customerName" TEXT,
 
     CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
@@ -21,7 +20,6 @@ CREATE TABLE "AttendanceRecord" (
     "id" SERIAL NOT NULL,
     "helperID" TEXT NOT NULL,
     "helperName" TEXT NOT NULL,
-    "customerID" TEXT NOT NULL,
     "customerName" TEXT NOT NULL,
     "checkIn" TIMESTAMP(3),
     "checkOut" TIMESTAMP(3),
