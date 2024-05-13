@@ -1,6 +1,7 @@
 "use client";
 
 import CameraJsQR2 from "@/app/componets/CameraJsQR2";
+import Link from "next/link";
 import Image from "next/image";
 
 export default function Home() {
@@ -12,7 +13,9 @@ export default function Home() {
       <div className="flex h-screen items-center justify-center">
         <CameraJsQR2 />
       </div>
-      <a href="/admin">管理者画面</a>
+      <Link href="/admin">
+        管理者画面
+      </Link>
     </div>
   );
 }
