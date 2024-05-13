@@ -14,7 +14,7 @@ const ViewCustomers = () => {
             setIsLoading(true);
             {
                 const res = await fetch("/api/customer/");
-                const users = await res.json();
+                const customers = await res.json();
                 setCustomers(customers);
             }
             setIsLoading(false);
@@ -45,7 +45,7 @@ const ViewCustomers = () => {
           <div className="flex flex-col items-center justify-start">
             {customers.map((customer) => (
               <Link
-                href={`/customer/edit/${customer.id}`}
+                href={`/customer/login/${customer.id}`}
                 className="flex border-2 w-full px-2 py-1"
               >
                 {JSON.stringify(customer)}

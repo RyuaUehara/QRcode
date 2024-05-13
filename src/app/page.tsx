@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ViewCustomer from "./componets/ViewCustomers";
+import ViewCustomers from "./componets/ViewCustomers";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
           <p className="font-bold text-7xl mb-10">page.tsx</p>
           <Link href="/customer">[new user]</Link>
         </div>
-        <ViewCustomer />
+        <ViewCustomers />
       </div>
     </div>
   );
