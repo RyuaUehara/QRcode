@@ -11,58 +11,55 @@ const CameraJsQR2 = () => {
   };
 
   useEffect(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-          scanQRCode();
-        })
-        .catch((error) => {
-          console.error("Error accessing the camera: ", error);
-        });
-    } else {
-      console.error("getUserMedia not supported");
-    }
-  }, []);
-
-  const scanQRCode = () => {
-    const canvas = canvasRef.current;
-    const video = videoRef.current;
-    const context = canvas.getContext("2d");
-
-    const scan = () => {
-      if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        canvas.height = video.videoHeight;
-        canvas.width = video.videoWidth;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const imageData = context.getImageData(
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-        const code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: "dontInvert",
-        });
-        if (code) {
-          setQrCodeText(code.data);
-          // QRコードの読み取り結果がURLの場合はリダイレクトする
-          if (isValidURL(code.data)) {
-            window.location.href = code.data;
-          }
-        } else {
-          setQrCodeText("");
-          requestAnimationFrame(scan);
-        }
+    const scanQRCode = () => {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then((stream) => {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play();
+            const context = canvasRef.current.getContext("2d");
+            const scan = () => {
+              if (videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
+                canvasRef.current.height = videoRef.current.videoHeight;
+                canvasRef.current.width = videoRef.current.videoWidth;
+                context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+                const imageData = context.getImageData(
+                  0,
+                  0,
+                  canvasRef.current.width,
+                  canvasRef.current.height
+                );
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                  inversionAttempts: "dontInvert",
+                });
+                if (code) {
+                  setQrCodeText(code.data);
+                  // QRコードの読み取り結果がURLの場合はリダイレクトする
+                  if (isValidURL(code.data)) {
+                    window.location.href = code.data;
+                  }
+                } else {
+                  setQrCodeText("");
+                  requestAnimationFrame(scan);
+                }
+              } else {
+                setQrCodeText("");
+                requestAnimationFrame(scan);
+              }
+            };
+            scan();
+          })
+          .catch((error) => {
+            console.error("Error accessing the camera: ", error);
+          });
       } else {
-        setQrCodeText("");
-        requestAnimationFrame(scan);
+        console.error("getUserMedia not supported");
       }
     };
-    scan();
-  };
+
+    scanQRCode();
+  }, []);
 
   const isValidURL = (url) => {
     // 簡単なURLのバリデーション
@@ -72,7 +69,7 @@ const CameraJsQR2 = () => {
 
   return (
     <div className="flex flex-col w-1/2 items-center border-2">
-      <p className="text-center w-full font-bold text-xl pb-2">use jsQR2</p>
+      <p className="text-center w-full font-bold text-xl pb-2">QRコードを読み込んでください</p>
       <video ref={videoRef} style={{ display: "none" }} />
       <canvas ref={canvasRef} style={{ display: "none" }} />
       <div>
@@ -83,7 +80,7 @@ const CameraJsQR2 = () => {
         onClick={resetQrCodeText}
         className="bg-red-900 text-white px-2 py-1 mb-2"
       >
-        reset
+        戻る
       </button>
     </div>
   );
