@@ -1,18 +1,17 @@
 import React, { useRef, useEffect, useState } from "react";
 import jsQR from "jsqr-es6";
-import QRCode from 'qrcode'; // qrcodeを直接インポートする
 
 const CameraJsQR2 = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [qrCodeText, setQrCodeText] = useState("");
-  const [qrCodeDataURL, setQrCodeDataURL] = useState(""); // QRコードのDataURLを状態として持つ
 
   const resetQrCodeText = () => {
     setQrCodeText("");
   };
 
   useEffect(() => {
+    // カメラへのアクセス
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia({ video: true })
@@ -47,12 +46,14 @@ const CameraJsQR2 = () => {
         );
         const code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: "dontInvert",
-          // UTF-8エンコーディングを指定する
-          decodeToText: true,
         });
         if (code) {
-          // QRコードのデータを設定する
-          setQrCodeText(code.data);
+          const qrCodeData = code.data;
+          if (isValidURL(qrCodeData)) {
+            window.location.href = qrCodeData; // URLに遷移する
+          } else {
+            setQrCodeText(qrCodeData);
+          }
         } else {
           setQrCodeText("");
           requestAnimationFrame(scan);
@@ -65,40 +66,31 @@ const CameraJsQR2 = () => {
     scan();
   };
 
-  useEffect(() => {
-    // コンポーネントがマウントされたときにQRコードのDataURLを生成する
-    QRCode.toDataURL(JSON.stringify(jsonData), function (err, url) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      setQrCodeDataURL(url); // QRコードのDataURLを設定する
-    });
-  }, []);
+  // URLの正規表現パターン
+  const urlPattern = /^(http|https):\/\/[^ "]+$/;
+
+  // 文字列がURLかどうかを判定する関数
+  const isValidURL = (text) => {
+    return urlPattern.test(text);
+  };
 
   return (
     <div className="flex flex-col w-1/2 items-center border-2">
-      <p className="text-center w-full font-bold text-xl pb-2">QRコードを読み込んでください</p>
+      <p className="text-center w-full font-bold text-xl pb-2">use jsQR2</p>
       <video ref={videoRef} style={{ display: "none" }} />
       <canvas ref={canvasRef} style={{ display: "none" }} />
       <div>
         <video ref={videoRef} width="320" height="240" autoPlay />
       </div>
       <p className="p-5 text-center w-full pt-5 h-20">{qrCodeText}</p>
-      {qrCodeDataURL && (
-        // QRコードのDataURLが利用可能な場合に画像として表示する
-        <img src={qrCodeDataURL} alt="QR Code" />
-      )}
       <button
         onClick={resetQrCodeText}
         className="bg-red-900 text-white px-2 py-1 mb-2"
       >
-        もう一回
+        reset
       </button>
     </div>
   );
 };
-
-const jsonData = { "name": "ひでと" };
 
 export default CameraJsQR2;
