@@ -18,7 +18,6 @@ CREATE TABLE "Customer" (
 -- CreateTable
 CREATE TABLE "AttendanceRecord" (
     "id" SERIAL NOT NULL,
-    "helperID" TEXT NOT NULL,
     "helperName" TEXT NOT NULL,
     "customerName" TEXT NOT NULL,
     "checkIn" TIMESTAMP(3),
@@ -29,6 +28,3 @@ CREATE TABLE "AttendanceRecord" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Helper_helperID_key" ON "Helper"("helperID");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Customer_customerID_key" ON "Customer"("customerID");
