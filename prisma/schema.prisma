@@ -15,15 +15,12 @@ model Helper {
 
 model Customer {
   id          Int      @id @default(autoincrement())
-  customerID  String   @unique
   customerName String?
 }
 
 model AttendanceRecord {
   id        Int      @id @default(autoincrement())
-  helperID  String
   helperName String
-  customerID String
   customerName String
   checkIn   DateTime?
   checkOut  DateTime?
